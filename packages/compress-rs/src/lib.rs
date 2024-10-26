@@ -18,31 +18,6 @@ pub enum Algorithm {
   DeflateRaw,
 }
 
-// #[napi(object)]
-// pub struct CompressionOptions {
-//   pub flush: Option<i32>,
-//   pub finish_flush: Option<i32>,
-//   pub chunk_size: Option<i32>,
-//   pub level: Option<i32>,
-//   pub mem_level: Option<i32>,
-//   pub strategy: Option<i32>,
-//   pub dictionary: Option<Buffer>,
-//   pub info: Option<bool>,
-//   pub max_output_length: Option<u32>,
-
-//   pub params: Option<HashMap<String, i32>>,
-// }
-
-// impl ToString for Algorithm {
-//   fn to_string(&self) -> String {
-//     match self {
-//       Algorithm::Gzip => "gzip".to_string(),
-//       Algorithm::BrotliCompress => "brotliCompress".to_string(),
-//       Algorithm::Deflate => "deflate".to_string(),
-//       Algorithm::DeflateRaw => "deflateRaw".to_string(),
-//     }
-//   }
-// }
 
 #[napi(object)]
 pub struct CompressionOptions {

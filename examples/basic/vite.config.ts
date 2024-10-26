@@ -1,6 +1,6 @@
 import vue from '@vitejs/plugin-vue'
 import jsx from '@vitejs/plugin-vue-jsx'
-import viteCompression from 'vite-plugin-compression-rs'
+import { vitePluginCompression, Algorithm } from 'vite-plugin-compression-rs'
 
 export default () => {
   return {
@@ -11,11 +11,11 @@ export default () => {
       vue(),
       jsx(),
       // gizp
-      viteCompression(),
+      vitePluginCompression(),
       // br
-      // viteCompression({
-      //   algorithm: 'brotliCompress',
-      // }),
+      vitePluginCompression({
+        algorithm: Algorithm.BrotliCompress,
+      }),
     ],
   }
 }

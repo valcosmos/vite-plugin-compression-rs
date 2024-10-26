@@ -1,6 +1,4 @@
-
-import type { Algorithm, CompressionOptions } from 'compress-rs'
-
+import { Algorithm, CompressionOptions } from 'compress-rs'
 
 // export type Algorithm = 'gzip' | 'brotliCompress' | 'deflate' | 'deflateRaw'
 

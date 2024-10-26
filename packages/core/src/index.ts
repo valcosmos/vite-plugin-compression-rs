@@ -6,7 +6,9 @@ import { readAllFile, isRegExp, isFunction } from './utils'
 import fs from 'fs-extra'
 import chalk from 'chalk'
 import Debug from 'debug'
-import { Algorithm, compress, getCompressionOptions } from 'compress-rs'
+import { compress, getCompressionOptions, Algorithm } from 'compress-rs'
+
+export { Algorithm }
 
 const debug = Debug.debug('vite-plugin-compression-rs')
 
@@ -14,7 +16,9 @@ const extRE = /\.(js|mjs|json|css|html)$/i
 
 const mtimeCache = new Map<string, number>()
 
-export default function (options: VitePluginCompression = {}): Plugin {
+export function vitePluginCompression(
+  options: VitePluginCompression = {},
+): Plugin {
   let outputPath: string
   let config: ResolvedConfig
 
@@ -30,19 +34,19 @@ export default function (options: VitePluginCompression = {}): Plugin {
     compressionOptions = {},
     deleteOriginFile = false,
     // eslint-disable-next-line
-    success = () => { },
+    success = () => {},
   } = options
 
-  const { ext = '.gz' } = options
-  // const { algorithm } = options
+  let ext = options.ext || '.gz'
+  const algorithm = options.algorithm || Algorithm.Gzip
 
-  // if (algorithm === 'gzip' && !ext) {
-  //   ext = '.gz'
-  // }
+  if (algorithm === Algorithm.Gzip && !ext) {
+    ext = '.gz'
+  }
 
-  // if (algorithm === 'brotliCompress' && !ext) {
-  //   ext = '.br'
-  // }
+  if (algorithm === Algorithm.BrotliCompress && !ext) {
+    ext = '.br'
+  }
 
   if (disable) {
     return emptyPlugin
@@ -54,14 +58,14 @@ export default function (options: VitePluginCompression = {}): Plugin {
     ...emptyPlugin,
     apply: 'build',
     enforce: 'post',
-    configResolved (resolvedConfig) {
+    configResolved(resolvedConfig) {
       config = resolvedConfig
       outputPath = path.isAbsolute(config.build.outDir)
         ? config.build.outDir
         : path.join(config.root, config.build.outDir)
       debug('resolvedConfig:', resolvedConfig)
     },
-    async closeBundle () {
+    async closeBundle() {
       let files = readAllFile(outputPath) || []
       debug('files:', files)
 
@@ -70,7 +74,7 @@ export default function (options: VitePluginCompression = {}): Plugin {
       files = filterFiles(files, filter)
 
       const compressOptions = getCompressionOptions(
-        Algorithm.Gzip,
+        algorithm,
         compressionOptions,
       )
 
@@ -91,7 +95,7 @@ export default function (options: VitePluginCompression = {}): Plugin {
         }
 
         try {
-          content = await compress(content, Algorithm.Gzip, compressOptions)
+          content = await compress(content, algorithm, compressOptions)
         } catch (error) {
           config.logger.error('compress error:' + filePath)
         }
@@ -110,7 +114,7 @@ export default function (options: VitePluginCompression = {}): Plugin {
 
       return Promise.all(handles).then(() => {
         if (verbose) {
-          handleOutputLogger(config, compressMap, Algorithm.Gzip)
+          handleOutputLogger(config, compressMap, algorithm)
           success()
         }
       })
@@ -118,7 +122,7 @@ export default function (options: VitePluginCompression = {}): Plugin {
   }
 }
 
-function filterFiles (
+function filterFiles(
   files: string[],
   filter: RegExp | ((file: string) => boolean),
 ) {
@@ -196,20 +200,21 @@ function filterFiles (
  * @param filepath
  * @param ext
  */
-function getOutputFileName (filepath: string, ext: string) {
+function getOutputFileName(filepath: string, ext: string) {
   const compressExt = ext.startsWith('.') ? ext : `.${ext}`
   return `${filepath}${compressExt}`
 }
 
 // Packed output logic
-function handleOutputLogger (
+function handleOutputLogger(
   config: ResolvedConfig,
   compressMap: Map<string, { size: number; oldSize: number; cname: string }>,
   algorithm: string,
 ) {
   config.logger.info(
-    `\n${chalk.cyan('✨ [vite-plugin-compression-rs]:algorithm=' + algorithm)}` +
-    ` - compressed file successfully: `,
+    `\n${chalk.cyan(
+      '✨ [vite-plugin-compression-rs]:algorithm=' + algorithm,
+    )}` + ` - compressed file successfully: `,
   )
 
   const keyLengths = Array.from(compressMap.keys(), (name) => name.length)
@@ -229,10 +234,10 @@ function handleOutputLogger (
 
     config.logger.info(
       chalk.dim(path.basename(config.build.outDir) + '/') +
-      chalk.blueBright(rName) +
-      ' '.repeat(2 + maxKeyLength - name.length) +
-      ' ' +
-      chalk.dim(sizeStr),
+        chalk.blueBright(rName) +
+        ' '.repeat(2 + maxKeyLength - name.length) +
+        ' ' +
+        chalk.dim(sizeStr),
     )
   })
   config.logger.info('\n')
