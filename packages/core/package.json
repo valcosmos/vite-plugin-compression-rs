@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-compression-rs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Use gzip or brotli to compress resources.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -15,7 +15,8 @@
   "license": "MIT",
   "author": "Cupid Valentine",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "dev": "pnpm unbuild --stub",

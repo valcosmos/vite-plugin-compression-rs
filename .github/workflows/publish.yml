@@ -34,6 +34,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
+      - name: Ensure README is included
+        run: cp README.md ./packages/core/
+
       - name: Publish to NPM
         # run: pnpm -r publish --access public --no-git-checks
         run: pnpm --filter vite-plugin-compression-rs publish --access public --no-git-checks
