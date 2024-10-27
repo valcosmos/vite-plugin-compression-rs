@@ -1,19 +1,15 @@
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import jsx from '@vitejs/plugin-vue-jsx'
 import {
-  vitePluginCompression,
   Algorithm,
   CompressionType,
+  vitePluginCompression,
 } from 'vite-plugin-compression-rs'
-import { defineConfig } from 'vite'
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  build: {
-    assetsInlineLimit: 0,
-  },
   plugins: [
     vue(),
-    jsx(),
     // gizp
     vitePluginCompression({
       algorithm: Algorithm.Gzip,
@@ -23,12 +19,12 @@ export default defineConfig({
       },
     }),
     // br
-    // vitePluginCompression({
-    //   algorithm: Algorithm.BrotliCompress,
-    //   ext: '.br',
-    //   compressionOptions: {
-    //     level: 11,
-    //   },
-    // }),
+    vitePluginCompression({
+      algorithm: Algorithm.BrotliCompress,
+      ext: '.br',
+      compressionOptions: {
+        level: 11,
+      },
+    }),
   ],
 })

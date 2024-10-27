@@ -8,9 +8,7 @@
   <v-chart style="width: 100%; height: 400px" :option="option" />
 </template>
 
-<script setup>
-import { defineComponent } from 'vue'
-
+<script lang="ts" setup>
 import gif from './assets/test.gif'
 import jpg from './assets/test.jpg'
 import png from './assets/test.png'

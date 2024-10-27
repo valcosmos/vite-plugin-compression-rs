@@ -1,10 +1,11 @@
 {
   "name": "vite-plugin-compression-rs",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Use gzip or brotli to compress resources.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "type": "module",
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
@@ -27,8 +28,7 @@
   "keywords": [
     "vite",
     "vite-plugin",
-    "imagemin",
-    "vben"
+    "imagemin"
   ],
   "repository": {
     "type": "git",
@@ -40,18 +40,16 @@
   },
   "homepage": "https://github.com/valcosmos/vite-plugin-compression-rs/tree/master/#readme",
   "dependencies": {
-    "chalk": "^4.1.2",
+    "chalk": "^5.3.0",
     "compress-rs": "^0.0.12",
-    "debug": "^4.3.3",
-    "fs-extra": "^10.0.0"
-  },
-  "peerDependencies": {
-    "vite": ">=2.0.0"
+    "debug": "^4.3.7",
+    "fs-extra": "^11.2.0",
+    "vite": "^5.4.10"
   },
   "devDependencies": {
-    "@types/chalk": "^2.2.0",
-    "@types/debug": "^4.1.7",
-    "@types/fs-extra": "^9.0.13",
-    "@types/node": "^17.0.13"
+    "@types/chalk": "^2.2.4",
+    "@types/debug": "^4.1.12",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.8.1"
   }
 }

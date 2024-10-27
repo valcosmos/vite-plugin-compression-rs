@@ -1,4 +1,4 @@
-import type { PluginOption, ResolvedConfig } from 'vite'
+import type { ResolvedConfig } from 'vite'
 import type { VitePluginCompression } from './types'
 import path from 'path'
 import { normalizePath } from 'vite'
@@ -23,16 +23,11 @@ const mtimeCache = new Map<string, number>()
 
 export function vitePluginCompression(
   options: VitePluginCompression = {},
-): PluginOption {
+): any {
   let outputPath: string
   let config: ResolvedConfig
 
-  const emptyPlugin: PluginOption = {
-    name: 'vite:compression',
-  }
-
   const {
-    disable = false,
     filter = extRE,
     verbose = true,
     threshold = 1025,
@@ -57,14 +52,10 @@ export function vitePluginCompression(
     ext = '.gz'
   }
 
-  if (disable) {
-    return emptyPlugin
-  }
-
   debug('plugin options:', options)
 
   return {
-    ...emptyPlugin,
+    name: 'vite:compression',
     apply: 'build',
     enforce: 'post',
     configResolved(resolvedConfig) {

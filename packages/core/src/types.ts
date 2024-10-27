@@ -21,7 +21,7 @@ export interface VitePluginCompression {
 
   /**
    * Whether to enable compression
-   * @default: false
+   * @deprecated
    */
   disable?: boolean
   /**
