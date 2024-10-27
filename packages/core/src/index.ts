@@ -6,9 +6,14 @@ import { readAllFile, isRegExp, isFunction } from './utils'
 import fs from 'fs-extra'
 import chalk from 'chalk'
 import Debug from 'debug'
-import { compress, getCompressionOptions, Algorithm } from 'compress-rs'
+import {
+  compress,
+  getCompressionOptions,
+  Algorithm,
+  CompressionType,
+} from 'compress-rs'
 
-export { Algorithm }
+export { Algorithm, CompressionType }
 
 const debug = Debug.debug('vite-plugin-compression-rs')
 
@@ -37,7 +42,7 @@ export function vitePluginCompression(
     success = () => {},
   } = options
 
-  let ext = options.ext || '.gz'
+  let ext = options.ext || ''
   const algorithm = options.algorithm || Algorithm.Gzip
 
   if (algorithm === Algorithm.Gzip && !ext) {
@@ -46,6 +51,10 @@ export function vitePluginCompression(
 
   if (algorithm === Algorithm.BrotliCompress && !ext) {
     ext = '.br'
+  }
+
+  if (!ext) {
+    ext = '.gz'
   }
 
   if (disable) {

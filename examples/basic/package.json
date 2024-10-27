@@ -9,7 +9,9 @@
     "test:br": "npm run build && http-server dist --cors --brotli -c-1"
   },
   "dependencies": {
-    "vue": "^3.2.29"
+    "echarts": "^5.5.1",
+    "vue": "^3.2.29",
+    "vue-echarts": "^7.0.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.1.0",

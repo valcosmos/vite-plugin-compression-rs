@@ -6,11 +6,21 @@
 export const enum Algorithm {
   Gzip = 'Gzip',
   BrotliCompress = 'BrotliCompress',
-  Deflate = 'Deflate',
-  DeflateRaw = 'DeflateRaw'
+}
+export const enum CompressionType {
+  Fast = 'Fast',
+  Best = 'Best',
 }
 export interface CompressionOptions {
   level?: number
+  compressionType?: CompressionType
 }
-export declare function getCompressionOptions(algorithm: Algorithm, compressionOptions: CompressionOptions): CompressionOptions
-export declare function compress(content: Buffer, algorithm: Algorithm, options: CompressionOptions): Promise<Buffer>
+export declare function getCompressionOptions(
+  algorithm: Algorithm,
+  compressionOptions: CompressionOptions,
+): CompressionOptions
+export declare function compress(
+  content: Buffer,
+  algorithm: Algorithm,
+  options: CompressionOptions,
+): Promise<Buffer>
