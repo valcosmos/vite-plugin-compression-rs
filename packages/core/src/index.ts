@@ -1,4 +1,4 @@
-import type { Plugin, ResolvedConfig } from 'vite'
+import type { PluginOption, ResolvedConfig } from 'vite'
 import type { VitePluginCompression } from './types'
 import path from 'path'
 import { normalizePath } from 'vite'
@@ -23,11 +23,11 @@ const mtimeCache = new Map<string, number>()
 
 export function vitePluginCompression(
   options: VitePluginCompression = {},
-): Plugin {
+): PluginOption {
   let outputPath: string
   let config: ResolvedConfig
 
-  const emptyPlugin: Plugin = {
+  const emptyPlugin: PluginOption = {
     name: 'vite:compression',
   }
 
@@ -151,58 +151,6 @@ function filterFiles(
   }
   return files
 }
-
-// /**
-//  * get common options
-//  */
-// function getCompressionOptions(
-//   algorithm = '',
-//   compressionOptions: CompressionOptions = {},
-// ) {
-//   const defaultOptions: {
-//     [key: string]: Record<string, any>
-//   } = {
-//     gzip: {
-//       level: zlib.constants.Z_BEST_COMPRESSION,
-//     },
-//     deflate: {
-//       level: zlib.constants.Z_BEST_COMPRESSION,
-//     },
-//     deflateRaw: {
-//       level: zlib.constants.Z_BEST_COMPRESSION,
-//     },
-//     brotliCompress: {
-//       params: {
-//         [zlib.constants.BROTLI_PARAM_QUALITY]:
-//           zlib.constants.BROTLI_MAX_QUALITY,
-//         [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
-//       },
-//     },
-//   }
-//   return {
-//     ...defaultOptions[algorithm],
-//     ...compressionOptions,
-//   } as CompressionOptions
-// }
-
-// /**
-//  * Compression core method
-//  * @param content
-//  * @param algorithm
-//  * @param options
-//  */
-// function compress(
-//   content: Buffer,
-//   algorithm: 'gzip' | 'brotliCompress' | 'deflate' | 'deflateRaw',
-//   options: CompressionOptions = {},
-// ) {
-//   return new Promise<Buffer>((resolve, reject) => {
-//     // @ts-ignore
-//     zlib[algorithm](content, options, (err, result) =>
-//       err ? reject(err) : resolve(result),
-//     )
-//   })
-// }
 
 /**
  * Get the suffix

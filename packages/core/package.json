@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-compression-rs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Use gzip or brotli to compress resources.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -41,7 +41,7 @@
   "homepage": "https://github.com/valcosmos/vite-plugin-compression-rs/tree/master/#readme",
   "dependencies": {
     "chalk": "^4.1.2",
-    "compress-rs": "workspace:*",
+    "compress-rs": "^0.0.12",
     "debug": "^4.3.3",
     "fs-extra": "^10.0.0"
   },
