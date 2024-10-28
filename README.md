@@ -33,29 +33,27 @@ import {
   CompressionType,
 } from 'vite-plugin-compression-rs'
 
-export default () => {
-  return {
-    plugins: [
-      // ...other plugins
-      // gizp
-      vitePluginCompression({
-        algorithm: Algorithm.Gzip,
-        ext: '.gz',
-        compressionOptions: {
-          compressionType: CompressionType.Best,
-        },
-      }),
-      // br
-      vitePluginCompression({
-        algorithm: Algorithm.BrotliCompress,
-        ext: '.br',
-        compressionOptions: {
-          level: 11,
-        },
-      }),
-    ],
-  }
-}
+export default defineConfig({
+  plugins: [
+    // ...other plugins
+    // gizp
+    vitePluginCompression({
+      algorithm: Algorithm.Gzip,
+      ext: '.gz',
+      compressionOptions: {
+        compressionType: CompressionType.Best,
+      },
+    }),
+    // br
+    vitePluginCompression({
+      algorithm: Algorithm.BrotliCompress,
+      ext: '.br',
+      compressionOptions: {
+        level: 11,
+      },
+    }),
+  ],
+})
 ```
 
 ### Options
